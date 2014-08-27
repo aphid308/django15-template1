@@ -2,8 +2,17 @@
 
 
 from os.path import abspath, basename, dirname, join, normpath
-from os import environ
 from sys import path
+import os
+
+from django.core.exceptions import ImproperlyConfigured
+
+def get_env_variable(var_name):
+    try:
+        return os.environ[var_name]
+    except KeyError:
+        error_msg = "Set the %s environment variable" % var_name
+        raise ImproperlyConfigured(error_msg)
 
 
 ########## PATH CONFIGURATION
@@ -34,7 +43,7 @@ TEMPLATE_DEBUG = DEBUG
 ########## MANAGER CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#admins
 ADMINS = (
-    ('Your Name', 'your_email@example.com'),
+    ('Patrick Jury', 'patrick.a.jury@gmail.com'),
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#managers
@@ -59,7 +68,7 @@ DATABASES = {
 
 ########## GENERAL CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#time-zone
-TIME_ZONE = 'America/Los_Angeles'
+TIME_ZONE = 'America/New_York'
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#language-code
 LANGUAGE_CODE = 'en-us'
@@ -111,7 +120,7 @@ STATICFILES_FINDERS = (
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
 # Note: This key should only be used for development and testing.
 # STORE DJANGO KEY IN ENVIRONMENT VARIABLE
-SECRET_KEY = os.environ["DJANGO_SECRET_KEY"]
+SECRET_KEY = get_env_variable("DJANGO_SECRET_KEY")
 ########## END SECRET CONFIGURATION
 
 
